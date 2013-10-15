@@ -1,3 +1,8 @@
+<style>
+* {
+	font-family: sans-serif;
+}
+</style>
 <?php
 /**
  * @file
@@ -19,20 +24,25 @@ $content = $connection->get('account/verify_credentials');
 $method = 'direct_messages';
 $max_msgs = 10;
 $control_char = '~';
-$response = (array) $connection->get($method, array('count' => $max_msgs));
+$response = $connection->get($method, array('count' => $max_msgs));
 
+echo "<pre>";
 print_r($response);
+echo "</pre>";
 
-for ($i = 0; $i < count($response); $i++) {
-	$arr = get_object_vars($response[$i]);
-	$id = $arr['id'];
-	$text = $arr['text'];
-	
+echo "<h1>Tweets available: " . count($response) . "</h1>";
+
+foreach ($response as $dm) {
+	$id = $dm->id;
+	$text = html_entity_decode($dm->text);
+	echo "<div>";
 	if(substr($text, 0, 1) == $control_char) {
-		// $connection->post('statuses/update', array('status' => $text));
-		// $connection->post('direct_messages/destroy', array('id' => $id));		
-		echo "tweeting " . $id;
+		$connection->post('statuses/update', array('status' => $text));
+		$connection->post('direct_messages/destroy', array('id' => $dm->id));
+		echo "<h2>tweeting</h2> <p>" . substr($text, 1) . "</p>";
 	} else {
-		echo "not tweeting " . $id;
+		echo "<h2>not tweeting</h2> <p>" . $text . "</p>";
 	}
+	echo "</div>";
 }
+?>

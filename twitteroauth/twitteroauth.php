@@ -28,7 +28,7 @@ class TwitterOAuth {
   /* Respons format. */
   public $format = 'json';
   /* Decode returned json data. */
-  public $decode_json = FALSE;
+  public $decode_json = TRUE;
   /* Contains the last HTTP headers returned. */
   public $http_info;
   /* Set the useragnet. */

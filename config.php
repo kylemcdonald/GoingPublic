@@ -11,5 +11,3 @@ define('OAUTH_CALLBACK', '');
 
 define('OAUTH_TOKEN', '');
 define('OAUTH_TOKEN_SECRET', '');
-
-define('MAX_MESSAGES', '');

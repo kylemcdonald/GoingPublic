@@ -19,18 +19,20 @@ $content = $connection->get('account/verify_credentials');
 $method = 'direct_messages';
 $max_msgs = 10;
 $control_char = '~';
-$response = $connection->get($method, array('count' => $max_msgs));
+$response = (array) $connection->get($method, array('count' => $max_msgs));
 
-for ($i = 0; $i < count($response); $i++) { 	
+print_r($response);
+
+for ($i = 0; $i < count($response); $i++) {
 	$arr = get_object_vars($response[$i]);
 	$id = $arr['id'];
 	$text = $arr['text'];
 	
 	if(substr($text, 0, 1) == $control_char) {
-		// tweet dm
-		$connection->post('statuses/update', array('status' => $text));
-		// destroy dm (optional)
+		// $connection->post('statuses/update', array('status' => $text));
 		// $connection->post('direct_messages/destroy', array('id' => $id));		
-		echo $id;
+		echo "tweeting " . $id;
+	} else {
+		echo "not tweeting " . $id;
 	}
 }

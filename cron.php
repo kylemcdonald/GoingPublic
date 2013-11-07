@@ -37,9 +37,10 @@ foreach ($response as $dm) {
 	$text = html_entity_decode($dm->text);
 	echo "<div>";
 	if(substr($text, 0, 1) == $control_char) {
-		$connection->post('statuses/update', array('status' => $text));
+		$msg = substr($text, 1);
+		$connection->post('statuses/update', array('status' => $msg));
 		$connection->post('direct_messages/destroy', array('id' => $dm->id));
-		echo "<h2>tweeting</h2> <p>" . substr($text, 1) . "</p>";
+		echo "<h2>tweeting</h2> <p>" . $msg . "</p>";
 	} else {
 		echo "<h2>not tweeting</h2> <p>" . $text . "</p>";
 	}

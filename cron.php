@@ -26,9 +26,9 @@ $max_msgs = 10;
 $control_char = '~';
 $response = $connection->get($method, array('count' => $max_msgs));
 
-echo "<pre>";
-print_r($response);
-echo "</pre>";
+// echo "<pre>";
+// print_r($response);
+// echo "</pre>";
 
 echo "<h1>Tweets available: " . count($response) . "</h1>";
 
@@ -42,7 +42,7 @@ foreach ($response as $dm) {
 		$connection->post('direct_messages/destroy', array('id' => $dm->id));
 		echo "<h2>tweeting</h2> <p>" . $msg . "</p>";
 	} else {
-		echo "<h2>not tweeting</h2> <p>" . $text . "</p>";
+		echo "<h2>not tweeting</h2>";//" <p>" . $text . "</p>";
 	}
 	echo "</div>";
 }

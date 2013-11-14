@@ -32,6 +32,9 @@ $response = $connection->get($method, array('count' => $max_msgs));
 
 echo "<h1>Tweets available: " . count($response) . "</h1>";
 
+$logFile = "log.txt";
+$fh = fopen($logFile, 'a');
+
 foreach ($response as $dm) {
 	$id = $dm->id;
 	$text = html_entity_decode($dm->text);
@@ -41,9 +44,12 @@ foreach ($response as $dm) {
 		$connection->post('statuses/update', array('status' => $msg));
 		$connection->post('direct_messages/destroy', array('id' => $dm->id));
 		echo "<h2>tweeting</h2> <p>" . $msg . "</p>";
+		fwrite($fh, $dm->id . "\t" . $dm->sender_screen_name . "\t" . $dm->text . "\t" . $dm->created_at);
 	} else {
 		echo "<h2>not tweeting</h2>";//" <p>" . $text . "</p>";
 	}
 	echo "</div>";
 }
+
+fclose($fh);
 ?>

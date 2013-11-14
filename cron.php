@@ -44,7 +44,8 @@ foreach ($response as $dm) {
 		$connection->post('statuses/update', array('status' => $msg));
 		$connection->post('direct_messages/destroy', array('id' => $dm->id));
 		echo "<h2>tweeting</h2> <p>" . $msg . "</p>";
-		fwrite($fh, $dm->id . "\t" . $dm->sender_screen_name . "\t" . $dm->text . "\t" . $dm->created_at);
+		$log = "<div><p>" . $dm->text . "</p><p><strong><a href=\"http://twitter.com/". $dm->sender_screen_name . "\">" . $dm->sender_screen_name . "</a></strong> <em>" . $dm->created_at . "</em> " . $dm->id . "</p></div><hr/>\n";
+		fwrite($fh, $log);
 	} else {
 		echo "<h2>not tweeting</h2>";//" <p>" . $text . "</p>";
 	}

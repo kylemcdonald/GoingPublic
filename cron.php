@@ -32,7 +32,7 @@ $response = $connection->get($method, array('count' => $max_msgs));
 
 echo "<h1>Tweets available: " . count($response) . "</h1>";
 
-$logFile = "log.txt";
+$logFile = "log.html";
 $fh = fopen($logFile, 'a');
 
 foreach ($response as $dm) {
